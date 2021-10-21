@@ -1,6 +1,6 @@
 <h1>장고 프로젝트 초기 설정</h1>
 1.프로젝트 폴더인 mySite 폴더랑 같은 위치에 가상 환경을 먼저 만든다 <br>
-  -capstone_project 안에 "capstone_project"라는 같은 이름의 폴더가 존재하지만 본 문서에서 말하는 프로젝트 폴더는 제일 밖의 capstone_project폴더다. <br>
+  -capstone_project 안에 "mySite"라는 같은 이름의 폴더가 존재하지만 본 문서에서 말하는 프로젝트 폴더는 제일 밖의 mySite폴더다. <br>
   -> python -m venv "가상환경"  <br>
 2.가상환경이 있는 위치에서 가상 환경을 킨다.<br>
   -> source "가상환경"/bin/activate(mac 일 경우)<br>
