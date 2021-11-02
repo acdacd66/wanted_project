@@ -6,5 +6,5 @@ urlpatterns =[
     path('comment/', views.CommentCrud.as_view()),
     path('Nestedcomment/', views.NestedCommentCrud.as_view()),
     path('blog/<int:pk>/', views.BlogDetail.as_view()),
-    
+    path('blog/search/', views.TitleSearch.as_view())
 ]
