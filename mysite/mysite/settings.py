@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-axb%(ue!or!hw(%@p(m=0hq(joruvvoug-@em_oxki#_fndg4_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".ap-northeast-2.compute.amazonaws.com"]
 
 
 # Application definition
@@ -85,6 +85,15 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'shine',
+#         'HOST': '127.0.0.1',
+#         'PORT': 27017,
+#     }
+# }
 
 DATABASES = {
     'default': {
