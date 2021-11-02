@@ -1,6 +1,6 @@
 # 데이터 처리
-from .models import Board
-from .serializers import BoardSerializer
+from .models import Board,Comment,Nested_Comment
+from .serializers import BoardSerializer,CommentSerializer,NestedCommentSerializer
 
 # APIView를 사용하기 위해 import
 from rest_framework.views import APIView
@@ -48,8 +48,10 @@ class BlogDetail(APIView):
     
     # Blog의 detail 보기
     def get(self, request, pk, format=None):
-        blog = self.get_object(pk)
-        serializer = BoardSerializer(blog)
+        board = self.get_object(pk)
+        board.view_user.add(request.user)
+        board.view_count = board.view_user.count()
+        serializer = BoardSerializer(board)
         return Response(serializer.data)
 
     # Blog 수정하기
@@ -73,3 +75,54 @@ class BlogDetail(APIView):
             return Response("삭제 권한이 없습니다.",status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)      
     
+
+
+class CommentCrud(APIView,LimitOffsetPagination):
+    def get(self, request):
+        board_pk = request.query_params.get('board_id', '') 
+        comments = Comment.objects.filter(board_id = board_pk)
+        # 여러 개의 객체를 serialization하기 위해 many=True로 설정
+
+        page = self.paginate_queryset(comments,request, view=self)
+        if page is not None:
+            serializer = CommentSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    # 새로운 Blog 글을 작성할 때
+    def post(self, request):
+        # request.data는 사용자의 입력 데이터
+        comment = Comment()
+        
+        comment.content = request.data['content']
+        comment.author = request.user
+        comment.board_id = Board.objects.get(pk = request.data['board_id'])
+        comment.save() 
+        
+        return Response(status=status.HTTP_200_OK)
+
+class NestedCommentCrud(APIView,LimitOffsetPagination):
+    def get(self, request):
+        comment_pk = request.query_params.get('comment_id', '') 
+        comments = Nested_Comment.objects.filter(comment_id = comment_pk)
+        # 여러 개의 객체를 serialization하기 위해 many=True로 설정
+
+        page = self.paginate_queryset(comments,request, view=self)
+        if page is not None:
+            serializer = NestedCommentSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = NestedCommentSerializer(comments, many=True)
+        return Response(serializer.data)
+    # 새로운 Blog 글을 작성할 때
+    def post(self, request):
+        # request.data는 사용자의 입력 데이터
+        comment = Nested_Comment()
+        
+        comment.content = request.data['content']
+        comment.author = request.user
+        comment.comment_id = Comment.objects.get(pk = request.data['comment_id'])
+        comment.save() 
+        
+        return Response(status=status.HTTP_200_OK)

@@ -12,6 +12,7 @@ class Board(models.Model):
         on_delete=models.CASCADE,null=True
     )
     view_user = models.ManyToManyField(User,blank=True,related_name='user_view')
+    view_count = models.IntegerField(default = 0,null = True)
     catagory = models.IntegerField(null = True)
 
 
