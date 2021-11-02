@@ -1,6 +1,6 @@
 # 데이터 처리
 from .models import Board
-from .serializers import BlogSerializer
+from .serializers import BoardSerializer
 
 # APIView를 사용하기 위해 import
 from rest_framework.views import APIView
@@ -19,10 +19,10 @@ class BlogList(APIView,LimitOffsetPagination):
 
         page = self.paginate_queryset(blogs,request, view=self)
         if page is not None:
-            serializer = BlogSerializer(page, many=True)
+            serializer = BoardSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = BlogSerializer(blogs, many=True)
+        serializer = BoardSerializer(blogs, many=True)
         return Response(serializer.data)
 
     # 새로운 Blog 글을 작성할 때
@@ -30,8 +30,9 @@ class BlogList(APIView,LimitOffsetPagination):
         # request.data는 사용자의 입력 데이터
         board = Board()
         board.title = request.data['title']
-        board.body = request.data['body']
-        board.profile = request.user
+        board.content = request.data['content']
+        board.catagory = request.data['catagory']
+        board.author = request.user
         board.save() 
         
         return Response(status=status.HTTP_200_OK)
@@ -48,14 +49,14 @@ class BlogDetail(APIView):
     # Blog의 detail 보기
     def get(self, request, pk, format=None):
         blog = self.get_object(pk)
-        serializer = BlogSerializer(blog)
+        serializer = BoardSerializer(blog)
         return Response(serializer.data)
 
     # Blog 수정하기
     def put(self, request, pk, format=None):
-        blog = self.get_object(pk)
-        if blog.profile == request.user:#해당 유저의 글인 경우
-            serializer = BlogSerializer(blog, data=request.data) 
+        board = self.get_object(pk)
+        if board.author == request.user:#해당 유저의 글인 경우
+            serializer = BoardSerializer(board, data=request.data) 
         else:
             return Response("수정 권한이 없습니다.",status=status.HTTP_400_BAD_REQUEST)
         if serializer.is_valid():
@@ -65,9 +66,9 @@ class BlogDetail(APIView):
 
     # Blog 삭제하기
     def delete(self, request, pk, format=None):
-        blog = self.get_object(pk)
-        if blog.profile == request.user: #해당 유저의 글인 경우
-            blog.delete()
+        board = self.get_object(pk)
+        if board.author == request.user: #해당 유저의 글인 경우
+            board.delete()
         else:
             return Response("삭제 권한이 없습니다.",status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_204_NO_CONTENT)      
