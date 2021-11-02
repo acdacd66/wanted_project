@@ -126,3 +126,23 @@ class NestedCommentCrud(APIView,LimitOffsetPagination):
         comment.save() 
         
         return Response(status=status.HTTP_200_OK)
+
+class TitleSearch(APIView):
+    def get(self, request):
+        search_value = request.query_params.get("search", "")
+
+        boards = Board.objects.filter(title__icontains = search_value)
+
+        if not boards.exists():
+            return Response("검색 결과가 없습니다.", status=status.HTTP_404_NOT_FOUND)
+
+        results = [
+            {
+                'board_id'       : board.id,
+                'board_title'    : board.title,
+                'board_content'  : board.content,
+                'board_category' : board.catagory
+            } for board in boards
+        ]
+
+        return Response(results, status=status.HTTP_200_OK)
