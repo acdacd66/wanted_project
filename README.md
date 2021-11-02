@@ -40,4 +40,3 @@
 7. 게시판 제목 검색
    -icontain을 이용하여 입력된 값을 제목으로 가직 있는 게시판의 정보를 리턴하여줍니다.
    - 게시글 제목 검색 api spec -> https://www.notion.so/95b94a7f6ff54c5c8b041aae6d02010a?v=ea5ba941fc9c48eb82489412f3d45bc9
->>>>>>> 380356bc27f034461eb01409f55042f65bc38549
