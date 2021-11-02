@@ -45,3 +45,6 @@
   - 댓글 조회 api sepc -> https://www.notion.so/http-127-0-0-1-8000-crud-comment-board_id-int-pk-c03f7904cf3445a5a60f8926911639f0 <br>
   - 대댓글 생성 api spec -> https://www.notion.so/http-127-0-0-1-8000-crud-Nestedcomment-62458797262e46e39cf89c9e8e60df2c <br>
   - 대댓글 조회 api spec -> https://www.notion.so/http-127-0-0-1-8000-crud-Nestedcomment-comment_id-int-pk-d97dc9e85d4a4e75b7a58b4945d2051a <br>
+
+<h1> 배포 서버 주소</h1>
+-> http://ec2-13-209-12-175.ap-northeast-2.compute.amazonaws.com:8080/
