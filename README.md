@@ -36,7 +36,7 @@
   -게시판 글 수정 api spec -> https://www.notion.so/http-127-0-0-1-8000-crud-blog-int-pk-5185e5c6548249aab793e06e56445ba0 <br><br>
 6. 게시판 글 삭제
    -django orm 모듈을 이용하여 해당 pk의 db 레코드를 삭제하였습니다.<br>
-  -게시판 글 삭제 api spec -> https://www.notion.so/http-127-0-0-1-8000-crud-blog-int-pk-5c43798d723742be86438de88239b6d3 <br>
+  -게시판 글 삭제 api spec -> https://www.notion.so/http-127-0-0-1-8000-crud-blog-int-pk-5c43798d723742be86438de88239b6d3 <br><br>
 7. 게시판 제목 검색
    -icontain을 이용하여 입력된 값을 제목으로 가직 있는 게시판의 정보를 리턴하여줍니다.
    - 게시글 제목 검색 api spec -> https://www.notion.so/95b94a7f6ff54c5c8b041aae6d02010a?v=ea5ba941fc9c48eb82489412f3d45bc9
